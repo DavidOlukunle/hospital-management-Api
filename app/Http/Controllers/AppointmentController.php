@@ -17,7 +17,7 @@ class AppointmentController extends Controller
     public function index()
     {
         $allAppointment = [
-            'id' => 1,
+            'id' => 2,
             'name' => 'david',
             'message' => 'doctor needed'
         ];
