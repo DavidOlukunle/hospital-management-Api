@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 //public routes
-Route::get('/allAppointment', [AppointmentController::class, 'index']);
+Route::get('/appointment/{appointment}', [AppointmentController::class, 'show']);
 
 Route::post('/register', [AuthController::class, 'Register']);
 Route::post('/login', [AuthController::class, 'Login']);
@@ -36,7 +36,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     // Route::post('/appointment', [AppointmentController::class, 'store']);
     // Route::get('/appointment/{appointment}', [AppointmentController::class, 'show']);
     // Route::delete('/apointment/{appointment}', [AppointmentController::class, 'destroy']);
-   Route::resource('/appointment', '\App\Http\Controllers\AppointmentController' );
+  // Route::resource('/appointment', '\App\Http\Controllers\AppointmentController' );
 
 
 });
