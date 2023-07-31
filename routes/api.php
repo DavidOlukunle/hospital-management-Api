@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\AppointmentController;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DoctorVerificationController;
+use App\Http\Controllers\DoctorController;
 
-use App\Models\Appointment;
+use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\DoctorVerificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,21 +23,25 @@ use App\Models\Appointment;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-//public routes
-Route::get('/appointment/{appointment}', [AppointmentController::class, 'show']);
 
+
+//public route
 Route::post('/register', [AuthController::class, 'Register']);
 Route::post('/login', [AuthController::class, 'Login']);
 Route::get('/all_users', [AuthController::class, 'index']);
+Route::get('/search_doctor', [AppointmentController::class, 'findDoctor']);
+Route::get('/allDoctors', [AppointmentController::class, 'allDoctors']);
+Route::get('/accept_appointment/{id}', [DoctorController::class, 'acceptAppointment']);
+Route::get('/reject_appointment/{id}', [DoctorController::class, 'rejectAppointment']);
 
 
+//protected routes
 Route::group(['middleware' => ['auth:sanctum']], function() {
+
     Route::post('/logout', [AuthController::class, 'Logout']);
     Route::post('/doctor_verification', [DoctorVerificationController::class, 'VerifyDoctor']);
-    // Route::post('/appointment', [AppointmentController::class, 'store']);
-    // Route::get('/appointment/{appointment}', [AppointmentController::class, 'show']);
-    // Route::delete('/apointment/{appointment}', [AppointmentController::class, 'destroy']);
-  // Route::resource('/appointment', '\App\Http\Controllers\AppointmentController' );
+    Route::resource('/appointment', '\App\Http\Controllers\AppointmentController' );
+    Route::get('/my_appointments', [DoctorController::class, 'viewAllAppointment']);
 
 
 });

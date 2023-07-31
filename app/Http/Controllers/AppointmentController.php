@@ -2,36 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Appointment;
+use App\Models\User;
 
+use App\Models\Appointment;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreAppointmentRequest;
 use App\Traits\HttpResponses;
+use App\Models\DoctorVerification;
+use App\Http\Resources\DoctorResource;
+use App\Http\Requests\StoreAppointmentRequest;
+use App\Traits\FilterSearch;
 
 class AppointmentController extends Controller
 {
     use HttpResponses;
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $allAppointment = [
-            'id' => 2,
-            'name' => 'david',
-            'message' => 'doctor needed'
-        ];
 
-        return response()->json($allAppointment);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -43,6 +27,7 @@ class AppointmentController extends Controller
         $appointment = Appointment::create([
             'message' => $request->message,
             'phone_number' => $request->phone_number,
+            'doctor_name' =>$request->doctor_name,
             'user_id' => auth()->user()->id
         ]);
 
@@ -88,5 +73,37 @@ class AppointmentController extends Controller
        return response()->json([
         'message' => 'successfully deleted'
        ]);
+    }
+
+    // users can find a doctor  and view their profile for necessary appointment information
+    public function findDoctor(Request $request)
+    {
+        $query = DoctorVerification::query();
+
+        if ($request->has('speciality')) {
+            $query->where('speciality', 'LIKE', '%' . $request->input('speciality') . '%');
+        }
+
+
+        if ($request->has('years_of_experience')) {
+            $query->where('years_of_experience', 'LIKE', '%' . $request->input('years_of_experience') . '%');
+        }
+
+        $doctors = $query->where('status', 'processing')->get();
+
+            return response()->json($doctors);
+
+     }
+
+
+    // users can view all doctors
+
+    public function allDoctors()
+    {
+        return DoctorResource::collection(
+            DoctorVerification::all()->where('status', 'processing')
+        );
+
+
     }
 }

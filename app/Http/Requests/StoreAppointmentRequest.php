@@ -23,7 +23,8 @@ class StoreAppointmentRequest extends FormRequest
     {
         return [
             'message' => ['required', 'string'],
-            'phone_number' =>['required', 'string']
+            'phone_number' =>['required', 'string'],
+            'doctor_name' =>['required', 'string']
         ];
     }
 }
