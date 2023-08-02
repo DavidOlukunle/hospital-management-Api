@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class DoctorAvailability extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['reasons', 'period_of_leave'];
 }

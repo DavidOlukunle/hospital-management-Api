@@ -17,17 +17,7 @@ class AuthController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $fakeDAta =[
-            'id' => '1',
-            'name' => 'testname',
-            'email' => 'testemail@gmail.com'
-        ];
-        return response()->json([
-          $fakeDAta
-        ]);
-    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -55,17 +45,6 @@ class AuthController extends Controller
         return response($response, 201);
     }
 
-    //    $request->validated($request->all());
-
-    //    if(auth()->attempt(['email', 'password'])) {
-    //         return $this->error('', 'credentials do not match', 401);
-    //    }
-
-    //    $user = User::where('email', $request->email)->first();
-    //    return $this->success([
-    //     'user'=> $user,
-    //     'token' => $user->createToken('Api Token of' . $user->name)->plainText
-    //    ]);
 
 
     /**

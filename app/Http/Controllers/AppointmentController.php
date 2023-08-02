@@ -15,6 +15,7 @@ use App\Traits\FilterSearch;
 class AppointmentController extends Controller
 {
     use HttpResponses;
+    use FilterSearch;
 
 
     /**
@@ -76,22 +77,23 @@ class AppointmentController extends Controller
     }
 
     // users can find a doctor  and view their profile for necessary appointment information
-    public function findDoctor(Request $request)
+    public function findDoctor(request $request)
     {
-        $query = DoctorVerification::query();
 
-        if ($request->has('speciality')) {
-            $query->where('speciality', 'LIKE', '%' . $request->input('speciality') . '%');
-        }
+        // $query = DoctorVerification::query();
+
+        // if ($request->has('speciality')) {
+        //     $query->where('speciality', 'LIKE', '%' . $request->input('speciality') . '%');
+        // }
 
 
-        if ($request->has('years_of_experience')) {
-            $query->where('years_of_experience', 'LIKE', '%' . $request->input('years_of_experience') . '%');
-        }
+        // if ($request->has('years_of_experience')) {
+        //     $query->where('years_of_experience', 'LIKE', '%' . $request->input('years_of_experience') . '%');
+        // }
 
-        $doctors = $query->where('status', 'processing')->get();
+        // $doctors = $query->where('status', 'processing')->get();
 
-            return response()->json($doctors);
+        //     return response()->json($doctors);
 
      }
 
