@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\traits\HttpResponses;
 use App\Http\Requests\AuthRequest;
 use App\Http\Requests\LoginRequest;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -17,7 +18,10 @@ class AuthController extends Controller
     /**
      * Display a listing of the resource.
      */
-
+    public function allUsers()
+    {
+        return UserResource::collection(User::all());
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -25,7 +29,7 @@ class AuthController extends Controller
     public function Login(LoginRequest  $request)
     {
 
-      $request->validated($request->all());
+     $request->validated($request->all());
 
         $user = User::where('email', $request->email)->first();
 
@@ -44,6 +48,8 @@ class AuthController extends Controller
 
         return response($response, 201);
     }
+
+
 
 
 

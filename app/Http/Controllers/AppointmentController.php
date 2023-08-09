@@ -80,20 +80,24 @@ class AppointmentController extends Controller
     public function findDoctor(request $request)
     {
 
-        // $query = DoctorVerification::query();
-
-        // if ($request->has('speciality')) {
-        //     $query->where('speciality', 'LIKE', '%' . $request->input('speciality') . '%');
-        // }
+        $query = DoctorVerification::query();
 
 
-        // if ($request->has('years_of_experience')) {
-        //     $query->where('years_of_experience', 'LIKE', '%' . $request->input('years_of_experience') . '%');
-        // }
+        if ($request->has('speciality')) {
+            $query->where('speciality', 'LIKE', '%' . $request->input('speciality') . '%');
+        }
 
-        // $doctors = $query->where('status', 'processing')->get();
 
-        //     return response()->json($doctors);
+        if ($request->has('years_of_experience')) {
+            $query->where('years_of_experience', 'LIKE', '%' . $request->input('years_of_experience') . '%');
+        }
+
+        $query = DoctorResource::collection(DoctorVerification::where('status', 'processing')->get());
+
+        $doctors = $query;
+
+            return response()->json($doctors);
+
 
      }
 

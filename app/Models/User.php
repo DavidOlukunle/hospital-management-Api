@@ -49,4 +49,8 @@ class User extends Authenticatable
     public function Appointment(){
         return $this->hasMany(Appointmennt::class);
     }
+
+    public function DoctorVerification(){
+        return $this->hssOne(DoctorVerification::class);
+    }
 }

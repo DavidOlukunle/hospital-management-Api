@@ -7,19 +7,22 @@ use Illuminate\Http\Request;
 use App\Models\DoctorAvailability;
 use App\Http\Requests\AbsenceRequest;
 use App\Http\Resources\AppointmentResource;
+use Illuminate\Http\RedirectResponse;
 
 class DoctorController extends Controller
 {
     public function viewAllAppointment()
     {
+
         $appointment = Appointment::where('doctor_name',  auth()->user()->name)->get();
 
         return AppointmentResource::collection($appointment);
     }
 
 
-    public function acceptAppointment( $id)
+    public function acceptAppointment( $id, Appointment $appointment)
     {
+        $this->authorize('acceptAppointment', $appointment);
        $appointment = Appointment::where('id', $id);
        $appointment->update([
         'status' => 'accepted'

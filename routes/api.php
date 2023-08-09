@@ -28,23 +28,27 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //public route
 Route::post('/register', [AuthController::class, 'Register']);
 Route::post('/login', [AuthController::class, 'Login']);
-Route::get('/all_users', [AuthController::class, 'index']);
+Route::get('/all_users', [AuthController::class, 'allUsers']);
 Route::get('/search_doctor', [AppointmentController::class, 'findDoctor']);
 Route::get('/allDoctors', [AppointmentController::class, 'allDoctors']);
-Route::get('/accept_appointment/{id}', [DoctorController::class, 'acceptAppointment']);
+
 Route::get('/reject_appointment/{id}', [DoctorController::class, 'rejectAppointment']);
 
 
-//protected routes
+//protected  user routes
 Route::group(['middleware' => ['auth:sanctum']], function() {
 
     Route::post('/logout', [AuthController::class, 'Logout']);
     Route::post('/doctor_verification', [DoctorVerificationController::class, 'VerifyDoctor']);
     Route::resource('/appointment', '\App\Http\Controllers\AppointmentController' );
     Route::get('/my_appointments', [DoctorController::class, 'viewAllAppointment']);
+    Route::get('/accept_appointment/{id}', [DoctorController::class, 'acceptAppointment']);
 
 
 });
+
+//protected doctors routes
+
 
 
 
